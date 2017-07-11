@@ -1,7 +1,7 @@
-# Dependency Injection
-By Monolith
+# Monolith: Dependency Injection
 
 ### Installation
+
 In composer.json
 ```json
 {
