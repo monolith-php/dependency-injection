@@ -6,7 +6,8 @@ In composer.json
 ```json
 {
   "require": {
-    "monolith/dependency-injection": "dev-master"
+    "monolith/dependency-injection": "dev-master",
+    "monolith/collections": "dev-master"
   },
   "repositories": [
     {
