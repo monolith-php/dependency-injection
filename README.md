@@ -3,7 +3,7 @@ By Monolith
 
 ### Installation
 In composer.json
-```
+```json
 {
   "require": {
     "monolith/dependency-injection": "dev-master"
