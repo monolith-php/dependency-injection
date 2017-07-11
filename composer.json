@@ -26,11 +26,5 @@
   "config": {
     "sort-packages": true
   },
-  "minimum-stability": "dev",
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "git@github.com:mitchellvanw/monolith-collections.git"
-    }
-  ]
+  "minimum-stability": "dev"
 }
