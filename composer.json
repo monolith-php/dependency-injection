@@ -1,30 +1,36 @@
 {
-    "name": "monolith/dependency-injection",
-    "description": "Monolith: Dependency Injection",
-    "license": "MIT",
-    "keywords": [
-        "monolith",
-        "dependency injection",
-        "container"
-    ],
-    "homepage": "https://www.monolith-php.com",
-    "authors": [
-        {
-            "name": "Mitchell van Wijngaarden",
-            "email": "mitchell@kooding.nl"
-        }
-    ],
-    "require": {
-        "php": "^7.1",
-        "monolith/collections": "dev-master"
-    },
-    "autoload": {
-        "psr-4": {
-            "Monolith\\DependencyInjection\\": "src/"
-        }
-    },
-    "config": {
-        "sort-packages": true
-    },
-    "minimum-stability": "dev"
+  "name": "monolith/dependency-injection",
+  "description": "Monolith: Dependency Injection",
+  "license": "MIT",
+  "keywords": [
+    "monolith",
+    "dependency injection",
+    "container"
+  ],
+  "homepage": "https://www.monolith-php.com",
+  "authors": [
+    {
+      "name": "Mitchell van Wijngaarden",
+      "email": "mitchell@kooding.nl"
+    }
+  ],
+  "require": {
+    "php": "^7.1",
+    "monolith/collections": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "Monolith\\DependencyInjection\\": "src/"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "git@github.com:mitchellvanw/monolith-collections.git"
+    }
+  ]
 }
