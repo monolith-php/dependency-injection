@@ -16,21 +16,14 @@ final class Container implements ArrayAccess {
     }
 
     public function singleton(string $name, ?callable $resolver = null): void {
-        if ($this->isBound($name)) {
-            throw new ClassWasAlreadyBound($name);
-        }
         $resolver = $resolver ?: $this->fn($name);
         $this->bind($name, new Singleton($resolver, $this));
     }
 
-    public function isBound(string $name): bool {
-        return $this->bindings->hasKey($name);
-    }
-
-    public function resolve(string $name) {
+    public function make(string $name) {
         $f = $this->bindings->get($name);
         if ( ! $f) {
-            throw new \Exception("Could not resolve {$name}.");
+            throw new ContainerBindingNotFound($name);
         }
         return $f($this);
     }
@@ -42,11 +35,11 @@ final class Container implements ArrayAccess {
     }
 
     public function offsetExists($offset): bool {
-        return $this->isBound($offset);
+        return array_key_exists($offset, $this->bindings);
     }
 
     public function offsetGet($offset) {
-        return $this->resolve($offset);
+        return $this->make($offset);
     }
 
     public function offsetSet($offset, $value): void {
