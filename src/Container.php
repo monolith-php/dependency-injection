@@ -4,6 +4,7 @@ use ArrayAccess;
 use Monolith\Collections\Map;
 
 final class Container implements ArrayAccess {
+
     private $bindings;
 
     public function __construct() {
@@ -22,9 +23,13 @@ final class Container implements ArrayAccess {
 
     public function make(string $name) {
         $f = $this->bindings->get($name);
+
         if ( ! $f) {
-            throw new ContainerBindingNotFound($name);
+            // experiment
+            $this->bindings->add($name);
+            // throw new ContainerBindingNotFound($name);
         }
+
         return $f($this);
     }
 
