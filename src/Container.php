@@ -25,10 +25,8 @@ final class Container implements ArrayAccess {
         $f = $this->bindings->get($name);
 
         if ( ! $f) {
-            // experiment
-            $this->bindings->add($name);
+            $this->bind($name);
             $f = $this->bindings->get($name);
-            // throw new ContainerBindingNotFound($name);
         }
 
         return $f($this);
