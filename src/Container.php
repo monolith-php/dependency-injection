@@ -11,27 +11,63 @@ final class Container implements ArrayAccess {
         $this->bindings = new Map;
     }
 
-    public function bind(string $name, ?callable $resolver = null): void {
-        $resolver = $resolver ?: $this->fn($name);
-        $this->bindings->add($name, $resolver);
+    public function bind(string $name, $target = null): void {
+
+        // if target is null then we resolve a new self
+        if ($target == null) {
+            $this->bindings->add($name, $this->resolverFor($name));
+            return;
+        }
+
+        // if target is callable then it's a resolver
+        if (is_callable($target)) {
+            $this->bindings->add($name, $target);
+            return;
+        }
+
+        // if target is not a string, we don't know what's going on
+        if ( ! is_string($target)) {
+            throw new CannotBindIncompatibleResolver($target);
+        }
+
+        // if target is string (a fqcn) then resolve target
+        $this->bindings->add($name, $this->resolverFor($target));
     }
 
-    public function singleton(string $name, ?callable $resolver = null): void {
-        $resolver = $resolver ?: $this->fn($name);
-        $this->bind($name, new Singleton($resolver, $this));
+    public function singleton(string $name, $target = null): void {
+
+        // if target is null then we resolve a new self
+        if ($target == null) {
+            $this->bind($name, new Singleton($this->resolverFor($name), $this));
+            return;
+        }
+
+        // if target is callable then it's a resolver
+        if (is_callable($target)) {
+            $this->bind($name, new Singleton($target, $this));
+            return;
+        }
+
+        // if target is not a string, we don't know what's going on
+        if ( ! is_string($target)) {
+            throw new CannotBindIncompatibleResolver($target);
+        }
+
+        // if target is string (a fqcn) then resolve target
+        $this->bind($name, new Singleton($this->resolverFor($target), $this));
     }
 
     public function make(string $name) {
         $f = $this->bindings->get($name);
 
         if ( ! $f) {
-            $f = $this->fn($name);
+            $f = $this->resolverFor($name);
         }
 
         return $f($this);
     }
 
-    private function fn(string $className): callable {
+    private function resolverFor(string $className): callable {
         return function() use ($className) {
             return new $className;
         };
