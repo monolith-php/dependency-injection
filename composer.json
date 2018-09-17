@@ -32,8 +32,11 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "spec\\Monolith\\DependencyInjection\\": "spec/",
-    }
+      "spec\\Monolith\\DependencyInjection\\": "spec/"
+    },
+    "files": [
+      "spec/functions.php"
+    ]
   },
   "config": {
     "sort-packages": true,

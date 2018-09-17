@@ -58,13 +58,14 @@ final class Container implements ArrayAccess {
     }
 
     public function make(string $name) {
-        $f = $this->bindings->get($name);
 
-        if ( ! $f) {
-            $f = $this->resolverFor($name);
+        $binding = $this->bindings->get($name);
+
+        if ($binding) {
+            return $binding($this);
         }
 
-        return $f($this);
+        return $this->resolverFor($name)($this);
     }
 
     private function resolverFor(string $className): callable {
