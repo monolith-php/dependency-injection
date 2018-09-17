@@ -33,4 +33,13 @@ class ContainerSpec extends ObjectBehavior {
 
         $dependency1->shouldNotBe($dependency2);
     }
+
+    function it_can_resolve_a_singleton_instance() {
+        $this->singleton(SimpleDependency::class);
+
+        $dependency1 = $this->make(SimpleDependency::class);
+        $dependency2 = $this->make(SimpleDependency::class);
+
+        $dependency1->shouldBe($dependency2);
+    }
 }
