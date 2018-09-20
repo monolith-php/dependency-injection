@@ -1,7 +1,6 @@
 {
   "name": "monolith/dependency-injection",
-  "description": "Monolith: Dependency Injection",
-  "license": "MIT",
+  "description": "Dependency injection container for the Monolith framework.",
   "keywords": [
     "monolith",
     "dependency injection",
@@ -20,7 +19,7 @@
   ],
   "require": {
     "php": "^7.1",
-    "monolith/collections": "dev-master"
+    "monolith/collections": "^1.0"
   },
   "require-dev": {
     "phpspec/phpspec": "^5.0"
