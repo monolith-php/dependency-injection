@@ -1,3 +1,3 @@
-# dependency injection
+# Dependency Injection $$VERSION$$
 
 basic di container

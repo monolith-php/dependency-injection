@@ -27,7 +27,7 @@ final class Container implements ArrayAccess {
 
         // if target is not a string, we don't know what's going on
         if ( ! is_string($target)) {
-            throw new CannotBindIncompatibleResolver($target);
+            throw new CanNotBindIncompatibleResolver($target);
         }
 
         // if target is string (a fqcn) then resolve target
@@ -50,7 +50,7 @@ final class Container implements ArrayAccess {
 
         // if target is not a string, we don't know what's going on
         if ( ! is_string($target)) {
-            throw new CannotBindIncompatibleResolver($target);
+            throw new CanNotBindIncompatibleResolver($target);
         }
 
         // if target is string (a fqcn) then resolve target
@@ -83,10 +83,10 @@ final class Container implements ArrayAccess {
     }
 
     public function offsetSet($offset, $value): void {
-        throw new CannotBindThroughArrayAccess;
+        throw new CanNotBindThroughArrayAccess;
     }
 
     public function offsetUnset($offset): void {
-        throw new CannotUnsetBindingThroughArrayAccess;
+        throw new CanNotUnsetBindingThroughArrayAccess;
     }
 }
