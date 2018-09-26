@@ -2,8 +2,11 @@
 
 use ArrayAccess;
 use Monolith\Collections\Map;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\ContainerInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
-final class Container implements ArrayAccess {
+final class Container implements ContainerInterface, ArrayAccess {
 
     private $bindings;
 
@@ -57,7 +60,11 @@ final class Container implements ArrayAccess {
         $this->bind($name, new Singleton($this->resolverFor($target), $this));
     }
 
-    public function make(string $name) {
+    public function has($name) {
+        return $this->bindings->has($name);
+    }
+
+    public function get($name) {
 
         $binding = $this->bindings->get($name);
 
@@ -79,7 +86,7 @@ final class Container implements ArrayAccess {
     }
 
     public function offsetGet($offset) {
-        return $this->make($offset);
+        return $this->get($offset);
     }
 
     public function offsetSet($offset, $value): void {

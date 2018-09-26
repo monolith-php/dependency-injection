@@ -19,7 +19,8 @@
   ],
   "require": {
     "php": "^7.1",
-    "monolith/collections": "^1.0"
+    "monolith/collections": "^1.0",
+    "psr/container": "^1.0@dev"
   },
   "require-dev": {
     "phpspec/phpspec": "^5.0"
