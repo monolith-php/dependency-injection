@@ -11,16 +11,12 @@
     {
       "name": "Shawn McCool",
       "email": "shawn@heybigname.com"
-    },
-    {
-      "name": "Mitchell van Wijngaarden",
-      "email": "mitchell@kooding.nl"
     }
   ],
   "require": {
     "php": "^7.1",
-    "monolith/collections": "^1.0",
-    "psr/container": "^1.0@dev"
+    "monolith/collections": "^2",
+    "psr/container": "^1"
   },
   "require-dev": {
     "phpspec/phpspec": "^5.0"
