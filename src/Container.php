@@ -77,7 +77,7 @@ final class Container implements ContainerInterface, ArrayAccess {
 
     private function resolverFor(string $className): callable {
         return function() use ($className) {
-            return $this->get($className);
+            return $this->has($className) ? $this->get($className) : new $className;
         };
     }
 
