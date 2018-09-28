@@ -76,6 +76,10 @@ final class Container implements ContainerInterface
             return $resolver->resolve();
         }
 
+        if (interface_exists($name) && ! $this->resolvers->has($name)) {
+            throw new CanNotResolveAnUnboundInterface($name);
+        }
+
         return (new ReflectionBasedDependencyResolution($this->resolutionCallback(), $name))->resolve();
     }
 

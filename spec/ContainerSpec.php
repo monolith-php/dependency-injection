@@ -1,5 +1,6 @@
 <?php namespace spec\Monolith\DependencyInjection;
 
+use Monolith\DependencyInjection\CanNotResolveAnUnboundInterface;
 use Monolith\DependencyInjection\Container;
 use Monolith\DependencyInjection\MayNotBindTargetToSelf;
 use PhpSpec\ObjectBehavior;
@@ -55,5 +56,9 @@ class ContainerSpec extends ObjectBehavior
         $dependency2 = $this->get(NoDependencies::class);
 
         $dependency1->shouldBe($dependency2);
+    }
+
+    function it_throws_when_trying_to_resolve_an_unbound_interface() {
+        $this->shouldThrow(CanNotResolveAnUnboundInterface::class)->during('get', [NoDependenciesInterface::class]);
     }
 }
