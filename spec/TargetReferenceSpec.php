@@ -6,16 +6,20 @@ use PhpSpec\ObjectBehavior;
 
 class TargetReferenceSpec extends ObjectBehavior
 {
-    /** @var Container */
-    private $container;
+    /** @var callable */
+    private $resolutionCallback;
 
     function let()
     {
-        $this->container = new Container;
-        $this->container->bind(SimpleDependency::class, function (Container $c) {
+        $container = new Container;
+
+        $this->resolutionCallback = $container->resolutionCallback();
+
+        $container->bind(SimpleDependency::class, function ($c) {
             return new SimpleDependency;
         });
-        $this->beConstructedWith($this->container, SimpleDependency::class);
+
+        $this->beConstructedWith($this->resolutionCallback, SimpleDependency::class);
     }
 
     function it_is_initializable()

@@ -32,13 +32,14 @@ final class Container implements ContainerInterface
     private function resolverFor($target)
     {
         if (is_callable($target)) {
-            return new Callback($this, $target);
+            return new Callback($this->resolutionCallback(), $target);
         }
 
         if ( ! is_string($target)) {
             throw new ContainerResolutionTargetNotSupported($target);
         }
-        return new TargetReference($this, $target);
+
+        return new TargetReference($this->resolutionCallback(), $target);
     }
 
     public function has($name)
@@ -54,6 +55,14 @@ final class Container implements ContainerInterface
             return $resolver->resolve();
         }
 
-        return (new ReflectionBasedDependencyResolution($this, $name))->resolve();
+        return (new ReflectionBasedDependencyResolution($this->resolutionCallback(), $name))->resolve();
+    }
+
+    public function resolutionCallback(): callable
+    {
+        $container = $this;
+        return function (string $resolutionTarget) use ($container) {
+            return $container->get($resolutionTarget);
+        };
     }
 }

@@ -17,12 +17,12 @@ class SingletonSpec extends ObjectBehavior
         $this->resolutionCount = new NumberObject(0);
 
         $this->beConstructedWith(
-            new Callback($this->container, $this->callback())
+            new Callback($this->container->resolutionCallback(), $this->callback())
         );
     }
 
     function callback() {
-        return function (Container $c) {
+        return function ($c) {
             $this->resolutionCount->setNumber($this->resolutionCount->number()+1);
             return new NumberClass($this->resolutionCount->number());
         };

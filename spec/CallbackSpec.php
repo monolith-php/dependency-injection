@@ -12,9 +12,14 @@ class CallbackSpec extends ObjectBehavior
     function let()
     {
         $this->container = new Container;
-        $this->beConstructedWith($this->container, function (Container $c) {
-            return new SimpleDependency;
-        });
+
+        $this->beConstructedWith(
+            function (string $resolutionTarget) {
+                return $this->container->get($resolutionTarget);
+            },
+            function ($r) {
+                return new SimpleDependency;
+            });
     }
 
     function it_is_initializable()

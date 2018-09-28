@@ -4,14 +4,15 @@ use Monolith\Collections\Collection;
 
 final class ReflectionBasedDependencyResolution implements TargetResolutionAlgorithm
 {
-    /** @var Container */
-    private $container;
+    /** @var callable */
+    private $resolutionCallback;
     /** @var string */
     private $target;
 
-    public function __construct(Container $container, string $target)
+    public function __construct(callable $resolutionCallback, string $target)
     {
-        $this->container = $container;
+
+        $this->resolutionCallback = $resolutionCallback;
         $this->target = $target;
     }
 
@@ -23,7 +24,7 @@ final class ReflectionBasedDependencyResolution implements TargetResolutionAlgor
         // if the constructor is empty, just resolve it
         $constructor = $reflect->getConstructor();
         if ( ! $constructor) {
-            return $this->container->get($this->target);
+            return ($this->resolutionCallback)($this->target);
         }
 
         // get the types for each constructor parameter
@@ -42,7 +43,7 @@ final class ReflectionBasedDependencyResolution implements TargetResolutionAlgor
 
         // resolve each parameter independently into arguments
         $arguments = $parameterClasses->map(function(string $className) {
-            return $this->container->get($className);
+            return ($this->resolutionCallback)($className);
         });
 
         // create a new instance of the target with the resolved dependencies
