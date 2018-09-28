@@ -11,29 +11,32 @@ class ReflectionBasedDependencyResolutionSpec extends ObjectBehavior
 {
     /** @var collable */
     private $resolutionCallback;
+    private $container;
 
     function let()
     {
-        $this->resolutionCallback = (new Container)->resolutionCallback();
+        $this->container = new Container;
+
+        $this->resolutionCallback = $this->container->resolutionCallback();
     }
 
     function it_can_resolve_with_no_dependencies() {
-        $this->beConstructedWith($this->resolutionCallback, NoDependencies::class);
+        $this->beConstructedWith($this->container, NoDependencies::class);
         $this->resolve()->shouldHaveType(NoDependencies::class);
     }
 
     function it_can_resolve_with_a_single_dependency() {
-        $this->beConstructedWith($this->resolutionCallback, SingleDependency::class);
+        $this->beConstructedWith($this->container, SingleDependency::class);
         $this->resolve()->shouldHaveType(SingleDependency::class);
     }
 
     function it_can_resolve_with_multiple_dependencies() {
-        $this->beConstructedWith($this->resolutionCallback, MultipleDependencies::class);
+        $this->beConstructedWith($this->container, MultipleDependencies::class);
         $this->resolve()->shouldHaveType(MultipleDependencies::class);
     }
 
     function it_can_resolve_multiple_branching_dependencies() {
-        $this->beConstructedWith($this->resolutionCallback, MultipleBranchingDependencies::class);
+        $this->beConstructedWith($this->container, MultipleBranchingDependencies::class);
         $this->resolve()->shouldHaveType(MultipleBranchingDependencies::class);
     }
 }

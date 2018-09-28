@@ -35,7 +35,7 @@ final class Container implements ContainerInterface
             $this->resolvers->add(
                 $name,
                 new Singleton(
-                    new ReflectionBasedDependencyResolution($this->resolutionCallback(), $name)
+                    new ReflectionBasedDependencyResolution($this, $name)
                 )
             );
             return;
@@ -80,7 +80,7 @@ final class Container implements ContainerInterface
             throw new CanNotResolveAnUnboundInterface($name);
         }
 
-        return (new ReflectionBasedDependencyResolution($this->resolutionCallback(), $name))->resolve();
+        return (new ReflectionBasedDependencyResolution($this, $name))->resolve();
     }
 
     public function resolutionCallback(): callable
