@@ -3,6 +3,7 @@
 use Monolith\DependencyInjection\Callback;
 use Monolith\DependencyInjection\Container;
 use PhpSpec\ObjectBehavior;
+use spec\Monolith\DependencyInjection\DependencyStubs\NoDependencies;
 
 class CallbackSpec extends ObjectBehavior
 {
@@ -18,7 +19,7 @@ class CallbackSpec extends ObjectBehavior
                 return $this->container->get($resolutionTarget);
             },
             function ($r) {
-                return new SimpleDependency;
+                return new NoDependencies;
             });
     }
 
@@ -29,6 +30,6 @@ class CallbackSpec extends ObjectBehavior
 
     function it_can_resolve_from_a_callback()
     {
-        $this->resolve()->shouldHaveType(SimpleDependency::class);
+        $this->resolve()->shouldHaveType(NoDependencies::class);
     }
 }

@@ -31,18 +31,18 @@ final class ReflectionBasedDependencyResolution implements TargetResolutionAlgor
         $parameterClasses = (new Collection(
             $constructor->getParameters()
         ))
-        ->map(function(\ReflectionParameter $parameter) {
-            return $parameter->getClass() ? $parameter->getClass()->name : null;
-        })->filter(function ($class) {
-            return ! is_null($class);
-        });
+            ->map(function (\ReflectionParameter $parameter) {
+                return $parameter->getClass() ? $parameter->getClass()->name : null;
+            })->filter(function ($class) {
+                return ! is_null($class);
+            });
 
         if ($parameterClasses->count() != count($constructor->getParameters())) {
             throw new CanNotReflectivelyResolveTargetWithConstructorPrimitives($this->target);
         }
 
         // resolve each parameter independently into arguments
-        $arguments = $parameterClasses->map(function(string $className) {
+        $arguments = $parameterClasses->map(function (string $className) {
             return ($this->resolutionCallback)($className);
         });
 

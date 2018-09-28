@@ -14,13 +14,34 @@ final class Container implements ContainerInterface
 
     public function bind(string $name, $target): void
     {
+        if ($name === $target) {
+            throw new MayNotBindTargetToSelf("Attempted to bind {$name} to {$target}.");
+        }
+
         $this->resolvers->add(
             $name, $this->resolverFor($target)
         );
     }
 
-    public function singleton(string $name, $target)
+    public function singleton(string $name, $target = null)
     {
+        if ($name === $target) {
+            throw new MayNotBindTargetToSelf("Attempted to bind {$name} to {$target}.");
+        }
+
+        // if no target is specified, just resolve self as a singleton target using the
+        // reflection based resolution algorithm
+        if (is_null($target)) {
+            $this->resolvers->add(
+                $name,
+                new Singleton(
+                    new ReflectionBasedDependencyResolution($this->resolutionCallback(), $name)
+                )
+            );
+            return;
+        }
+
+        // name and target differ so allow this to be deferred
         $this->resolvers->add(
             $name,
             new Singleton(

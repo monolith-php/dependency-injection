@@ -3,6 +3,7 @@
 use Monolith\DependencyInjection\Container;
 use Monolith\DependencyInjection\TargetReference;
 use PhpSpec\ObjectBehavior;
+use spec\Monolith\DependencyInjection\DependencyStubs\NoDependencies;
 
 class TargetReferenceSpec extends ObjectBehavior
 {
@@ -15,11 +16,11 @@ class TargetReferenceSpec extends ObjectBehavior
 
         $this->resolutionCallback = $container->resolutionCallback();
 
-        $container->bind(SimpleDependency::class, function ($c) {
-            return new SimpleDependency;
+        $container->bind(NoDependencies::class, function ($c) {
+            return new NoDependencies;
         });
 
-        $this->beConstructedWith($this->resolutionCallback, SimpleDependency::class);
+        $this->beConstructedWith($this->resolutionCallback, NoDependencies::class);
     }
 
     function it_is_initializable()
@@ -29,6 +30,6 @@ class TargetReferenceSpec extends ObjectBehavior
 
     function it_can_resolve_a_target_from_the_container_by_name()
     {
-        $this->resolve()->shouldHaveType(SimpleDependency::class);
+        $this->resolve()->shouldHaveType(NoDependencies::class);
     }
 }
