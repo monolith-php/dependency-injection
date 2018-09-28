@@ -1,21 +1,21 @@
 <?php namespace Monolith\DependencyInjection;
 
-final class Singleton {
-
-    /** @var null|callable */
+final class Singleton implements TargetResolutionAlgorithm
+{
     private $instance;
-    /** @var callable */
-    private $f;
 
-    public function __construct(callable $f) {
+    /** @var TargetResolutionAlgorithm */
+    private $target;
 
-        $this->f = $f;
+    public function __construct(TargetResolutionAlgorithm $target)
+    {
+        $this->target = $target;
     }
 
-    public function __invoke(Container $container) {
-
-        if ( ! $this->instance) {
-            $this->instance = call_user_func($this->f, $container);
+    public function resolve()
+    {
+        if ( ! isset($this->instance)) {
+            $this->instance = $this->target->resolve();
         }
         return $this->instance;
     }
