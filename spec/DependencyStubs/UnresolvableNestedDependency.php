@@ -1,9 +1,20 @@
 <?php namespace spec\Monolith\DependencyInjection\DependencyStubs;
 
-use spec\Monolith\DependencyInjection\SimpleDependency;
 use spec\Monolith\DependencyInjection\NumberClass;
+use spec\Monolith\DependencyInjection\SimpleDependency;
 
 final class UnresolvableNestedDependency
 {
-    public function __construct(NumberClass $number, NoDependencies $noDependencies) {}
+    /** @var NumberClass */
+    private $number;
+
+    public function __construct(NumberClass $number, NoDependencies $noDependencies)
+    {
+        $this->number = $number;
+    }
+
+    public function number(): NumberClass
+    {
+        return $this->number;
+    }
 }

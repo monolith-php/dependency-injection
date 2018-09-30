@@ -4,8 +4,10 @@ use Monolith\DependencyInjection\CanNotResolveAnUnboundInterface;
 use Monolith\DependencyInjection\Container;
 use Monolith\DependencyInjection\MayNotBindTargetToSelf;
 use PhpSpec\ObjectBehavior;
+use spec\Monolith\DependencyInjection\DependencyStubs\MultipleDependencies;
 use spec\Monolith\DependencyInjection\DependencyStubs\NoDependencies;
 use spec\Monolith\DependencyInjection\DependencyStubs\NoDependenciesInterface;
+use spec\Monolith\DependencyInjection\DependencyStubs\SingleDependency;
 use spec\Monolith\DependencyInjection\DependencyStubs\UnresolvableNestedDependency;
 
 class ContainerSpec extends ObjectBehavior
@@ -58,7 +60,34 @@ class ContainerSpec extends ObjectBehavior
         $dependency1->shouldBe($dependency2);
     }
 
-    function it_throws_when_trying_to_resolve_an_unbound_interface() {
+    function it_throws_when_trying_to_resolve_an_unbound_interface()
+    {
         $this->shouldThrow(CanNotResolveAnUnboundInterface::class)->during('get', [NoDependenciesInterface::class]);
+    }
+
+    function it_can_bind_a_reference_to_another_binding()
+    {
+        $this->bind(UnresolvableNestedDependency::class, function($r) {
+            return new UnresolvableNestedDependency(new NumberClass(23), new NoDependencies());
+        });
+
+        $this->get(UnresolvableNestedDependency::class)->number()->number()->shouldBe(23);
+
+        $this->bind('arbitrary name', UnresolvableNestedDependency::class);
+
+        $this->get('arbitrary name')->shouldHaveType(UnresolvableNestedDependency::class);
+    }
+
+    function it_can_bind_a_singleton_reference_to_another_binding()
+    {
+        $this->bind(UnresolvableNestedDependency::class, function($r) {
+            return new UnresolvableNestedDependency(new NumberClass(23), new NoDependencies());
+        });
+
+        $this->get(UnresolvableNestedDependency::class)->number()->number()->shouldBe(23);
+
+        $this->singleton('arbitrary name', UnresolvableNestedDependency::class);
+
+        $this->get('arbitrary name')->shouldHaveType(UnresolvableNestedDependency::class);
     }
 }
