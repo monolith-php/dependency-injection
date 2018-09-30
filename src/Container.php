@@ -1,5 +1,6 @@
 <?php namespace Monolith\DependencyInjection;
 
+use Monolith\Collections\Collection;
 use Monolith\Collections\Map;
 use Psr\Container\ContainerInterface;
 
@@ -68,6 +69,13 @@ final class Container implements ContainerInterface
         return function (string $resolutionTarget) use ($container) {
             return $container->get($resolutionTarget);
         };
+    }
+
+    public function listBindings()
+    {
+        return array_map(function($resolver) {
+            return get_class($resolver);
+        }, $this->resolvers->toArray());
     }
 
     private function addResolver(string $name, TargetResolutionAlgorithm $resolver)
