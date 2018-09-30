@@ -21,9 +21,6 @@ final class ReflectionBasedDependencyResolution implements TargetResolutionAlgor
         // if the constructor is empty, just resolve it
         $constructor = $reflect->getConstructor();
         if ( ! $constructor) {
-            if ($this->container->has($this->target)) {
-                return $this->container->get($this->target);
-            }
             return new $this->target;
         }
 

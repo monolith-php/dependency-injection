@@ -6,12 +6,10 @@ use Psr\Container\ContainerInterface;
 final class Container implements ContainerInterface
 {
     private $resolvers;
-    private $singletons;
 
     public function __construct()
     {
         $this->resolvers = new Map;
-        $this->singletons = new Map;
     }
 
     public function bind(string $name, $target): void
@@ -44,7 +42,7 @@ final class Container implements ContainerInterface
         }
 
         // name and target differ so allow this to be deferred
-        $this->singletons->add(
+        $this->resolvers->add(
             $name,
             new Singleton(
                 $this->resolverFor($target)
@@ -67,17 +65,12 @@ final class Container implements ContainerInterface
 
     public function has($name)
     {
-        return $this->singletons->has($name) || $this->resolvers->has($name);
+        return $this->resolvers->has($name);
     }
 
     public function get($name)
     {
-        // singleton?
-        if ($this->singletons->has($name)) {
-            $resolver = $this->singletons->get($name);
-        } else {
-            $resolver = $this->resolvers->get($name);
-        }
+        $resolver = $this->resolvers->get($name);
 
         if ($resolver) {
             return $resolver->resolve();
