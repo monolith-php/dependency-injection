@@ -18,9 +18,7 @@ final class Container implements ContainerInterface
             throw new MayNotBindTargetToSelf("Attempted to bind {$name} to {$target}.");
         }
 
-        $this->resolvers->add(
-            $name, $this->resolverFor($target)
-        );
+        $this->addResolver($name, $this->resolverFor($target));
     }
 
     public function singleton(string $name, $target = null)
@@ -32,35 +30,16 @@ final class Container implements ContainerInterface
         // if no target is specified, just resolve self as a singleton target using the
         // reflection based resolution algorithm
         if (is_null($target)) {
-            $this->resolvers->add(
-                $name,
-                new Singleton(
-                    new ReflectionBasedDependencyResolution($this, $name)
-                )
-            );
+            $this->addResolver($name, new Singleton(
+                new ReflectionBasedDependencyResolution($this, $name)
+            ));
             return;
         }
 
         // name and target differ so allow this to be deferred
-        $this->resolvers->add(
-            $name,
-            new Singleton(
-                $this->resolverFor($target)
-            )
-        );
-    }
-
-    private function resolverFor($target)
-    {
-        if (is_callable($target)) {
-            return new Callback($this->resolutionCallback(), $target);
-        }
-
-        if ( ! is_string($target)) {
-            throw new ContainerResolutionTargetNotSupported($target);
-        }
-
-        return new TargetReference($this->resolutionCallback(), $target);
+        $this->addResolver($name, new Singleton(
+            $this->resolverFor($target)
+        ));
     }
 
     public function has($name)
@@ -89,5 +68,26 @@ final class Container implements ContainerInterface
         return function (string $resolutionTarget) use ($container) {
             return $container->get($resolutionTarget);
         };
+    }
+
+    private function addResolver(string $name, TargetResolutionAlgorithm $resolver)
+    {
+        if ($this->resolvers->has($name)) {
+            throw new \Exception("has");
+        }
+        $this->resolvers->add($name, $resolver);
+    }
+
+    private function resolverFor($target)
+    {
+        if (is_callable($target)) {
+            return new Callback($this->resolutionCallback(), $target);
+        }
+
+        if ( ! is_string($target)) {
+            throw new ContainerResolutionTargetNotSupported($target);
+        }
+
+        return new TargetReference($this->resolutionCallback(), $target);
     }
 }

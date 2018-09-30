@@ -4,10 +4,8 @@ use Monolith\DependencyInjection\CanNotResolveAnUnboundInterface;
 use Monolith\DependencyInjection\Container;
 use Monolith\DependencyInjection\MayNotBindTargetToSelf;
 use PhpSpec\ObjectBehavior;
-use spec\Monolith\DependencyInjection\DependencyStubs\MultipleDependencies;
 use spec\Monolith\DependencyInjection\DependencyStubs\NoDependencies;
 use spec\Monolith\DependencyInjection\DependencyStubs\NoDependenciesInterface;
-use spec\Monolith\DependencyInjection\DependencyStubs\SingleDependency;
 use spec\Monolith\DependencyInjection\DependencyStubs\UnresolvableNestedDependency;
 
 class ContainerSpec extends ObjectBehavior
@@ -67,7 +65,7 @@ class ContainerSpec extends ObjectBehavior
 
     function it_can_bind_a_reference_to_another_binding()
     {
-        $this->bind(UnresolvableNestedDependency::class, function($r) {
+        $this->bind(UnresolvableNestedDependency::class, function ($r) {
             return new UnresolvableNestedDependency(new NumberClass(23), new NoDependencies());
         });
 
@@ -80,7 +78,7 @@ class ContainerSpec extends ObjectBehavior
 
     function it_can_bind_a_singleton_reference_to_another_binding()
     {
-        $this->bind(UnresolvableNestedDependency::class, function($r) {
+        $this->bind(UnresolvableNestedDependency::class, function ($r) {
             return new UnresolvableNestedDependency(new NumberClass(23), new NoDependencies());
         });
 
