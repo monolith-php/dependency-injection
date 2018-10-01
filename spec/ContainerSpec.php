@@ -1,5 +1,6 @@
 <?php namespace spec\Monolith\DependencyInjection;
 
+use Monolith\DependencyInjection\CanNotRebindTheSameName;
 use Monolith\DependencyInjection\CanNotResolveAnUnboundInterface;
 use Monolith\DependencyInjection\Container;
 use Monolith\DependencyInjection\MayNotBindTargetToSelf;
@@ -87,5 +88,13 @@ class ContainerSpec extends ObjectBehavior
         $this->singleton('arbitrary name', UnresolvableNestedDependency::class);
 
         $this->get('arbitrary name')->shouldHaveType(UnresolvableNestedDependency::class);
+    }
+
+    function it_can_not_rebind_the_same_name()
+    {
+        $this->bind(UnresolvableNestedDependency::class, function ($r) {
+            return new UnresolvableNestedDependency(new NumberClass(rand(0,999)), new NoDependencies());
+        });
+        $this->shouldThrow(CanNotRebindTheSameName::class)->during('singleton', [UnresolvableNestedDependency::class]);
     }
 }

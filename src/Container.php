@@ -81,7 +81,7 @@ final class Container implements ContainerInterface
     private function addResolver(string $name, TargetResolutionAlgorithm $resolver)
     {
         if ($this->resolvers->has($name)) {
-            throw new \Exception("has");
+            throw new CanNotRebindTheSameName($name);
         }
         $this->resolvers->add($name, $resolver);
     }
