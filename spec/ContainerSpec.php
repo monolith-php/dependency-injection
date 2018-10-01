@@ -93,8 +93,13 @@ class ContainerSpec extends ObjectBehavior
     function it_can_not_rebind_the_same_name()
     {
         $this->bind(UnresolvableNestedDependency::class, function ($r) {
-            return new UnresolvableNestedDependency(new NumberClass(rand(0,999)), new NoDependencies());
+            return new UnresolvableNestedDependency(new NumberClass(rand(0, 999)), new NoDependencies());
         });
         $this->shouldThrow(CanNotRebindTheSameName::class)->during('singleton', [UnresolvableNestedDependency::class]);
+    }
+
+    function it_can_resolve_hde_instance_of_itself()
+    {
+        $this->get(Container::class)->shouldHaveType(Container::class);
     }
 }
