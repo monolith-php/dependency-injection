@@ -10,7 +10,7 @@ final class Container implements ContainerInterface
     public function __construct()
     {
         $this->resolvers = new Map;
-        $this->bind(Container::class, function($r) {
+        $this->bind(Container::class, function ($r) {
             return $this;
         });
     }
@@ -75,7 +75,7 @@ final class Container implements ContainerInterface
 
     public function listBindings()
     {
-        return array_map(function($resolver) {
+        return array_map(function ($resolver) {
             return get_class($resolver);
         }, $this->resolvers->toArray());
     }

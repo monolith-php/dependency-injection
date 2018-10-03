@@ -7,11 +7,11 @@ use Monolith\DependencyInjection\MayNotBindTargetToSelf;
 use PhpSpec\ObjectBehavior;
 use spec\Monolith\DependencyInjection\DependencyStubs\NoDependencies;
 use spec\Monolith\DependencyInjection\DependencyStubs\NoDependenciesInterface;
+use spec\Monolith\DependencyInjection\DependencyStubs\SingleDependencyWithDefaultParameter;
 use spec\Monolith\DependencyInjection\DependencyStubs\UnresolvableNestedDependency;
 
 class ContainerSpec extends ObjectBehavior
 {
-
     function it_is_initializable()
     {
         $this->shouldHaveType(Container::class);
@@ -98,8 +98,13 @@ class ContainerSpec extends ObjectBehavior
         $this->shouldThrow(CanNotRebindTheSameName::class)->during('singleton', [UnresolvableNestedDependency::class]);
     }
 
-    function it_can_resolve_hde_instance_of_itself()
+    function it_can_resolve_the_instance_of_itself()
     {
         $this->get(Container::class)->shouldHaveType(Container::class);
+    }
+
+    function it_can_resolve_an_object_with_an_unbound_parameter_so_long_as_it_has_a_default()
+    {
+        $this->get(SingleDependencyWithDefaultParameter::class);
     }
 }

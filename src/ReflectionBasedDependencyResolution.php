@@ -24,26 +24,20 @@ final class ReflectionBasedDependencyResolution implements TargetResolutionAlgor
             return new $this->target;
         }
 
-        // get the types for each constructor parameter
-        $parameterClasses = (new Collection(
-            $constructor->getParameters()
-        ))
-            ->map(function (\ReflectionParameter $parameter) {
-                return $parameter->getClass() ? $parameter->getClass()->name : null;
-            })->filter(function ($class) {
-                return ! is_null($class);
-            });
+        // object resolution
+        $parameters = new Collection($constructor->getParameters());
 
-        if ($parameterClasses->count() != count($constructor->getParameters())) {
-            throw new CanNotReflectivelyResolveTargetWithConstructorPrimitives($this->target);
-        }
+        $parameterInstances = $parameters->map(function (\ReflectionParameter $param) {
+            if ($param->getClass()) {
+                return $this->container->resolutionCallback()($param->getClass()->name);
+            }
 
-        // resolve each parameter independently into arguments
-        $arguments = $parameterClasses->map(function (string $className) {
-            return $this->container->resolutionCallback()($className);
+            if ($param->isDefaultValueAvailable()) {
+                return $param->getDefaultValue();
+            }
         });
 
         // create a new instance of the target with the resolved dependencies
-        return $reflect->newInstanceArgs($arguments->toArray());
+        return $reflect->newInstanceArgs($parameterInstances->toArray());
     }
 }
