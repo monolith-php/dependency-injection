@@ -15,7 +15,7 @@
   ],
   "require": {
     "php": "^7.1",
-    "monolith/collections": "^2",
+    "monolith/collections": "^3",
     "psr/container": "^1"
   },
   "require-dev": {
