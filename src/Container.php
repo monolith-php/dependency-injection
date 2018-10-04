@@ -1,6 +1,6 @@
 <?php namespace Monolith\DependencyInjection;
 
-use Monolith\Collections\Map;
+use Monolith\Collections\MutableMap;
 use Psr\Container\ContainerInterface;
 
 final class Container implements ContainerInterface
@@ -9,7 +9,7 @@ final class Container implements ContainerInterface
 
     public function __construct()
     {
-        $this->resolvers = new Map;
+        $this->resolvers = new MutableMap;
         $this->bind(Container::class, function ($r) {
             return $this;
         });
