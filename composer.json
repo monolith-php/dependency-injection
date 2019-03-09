@@ -6,7 +6,6 @@
     "dependency injection",
     "container"
   ],
-  "homepage": "https://www.getmonolith.com",
   "authors": [
     {
       "name": "Shawn McCool",
@@ -15,7 +14,7 @@
   ],
   "require": {
     "php": "^7.1",
-    "monolith/collections": "^3",
+    "monolith/collections": "^4",
     "psr/container": "^1"
   },
   "require-dev": {
