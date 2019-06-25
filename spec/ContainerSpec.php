@@ -59,6 +59,17 @@ class ContainerSpec extends ObjectBehavior
         $dependency1->shouldBe($dependency2);
     }
 
+    function it_can_resolve_a_bound_singleton_instance()
+    {
+        $instance = new NoDependencies;
+
+        $this->singleton(NoDependencies::class, $instance);
+
+        $resolved = $this->get(NoDependencies::class);
+
+        $resolved->shouldBe($instance);
+    }
+
     function it_throws_when_trying_to_resolve_an_unbound_interface()
     {
         $this->shouldThrow(CanNotResolveAnUnboundInterface::class)->during('get', [NoDependenciesInterface::class]);

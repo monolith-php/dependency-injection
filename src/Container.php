@@ -73,6 +73,13 @@ final class Container implements ContainerInterface
         };
     }
 
+    public function instanceCallback(): callable
+    {
+        return function ($instance) {
+            return $instance;
+        };
+    }
+
     public function listBindings()
     {
         return array_map(function ($resolver) {
@@ -92,6 +99,10 @@ final class Container implements ContainerInterface
     {
         if (is_callable($target)) {
             return new Callback($this->resolutionCallback(), $target);
+        }
+
+        if (is_object($target)) {
+            return new Callback($this->instanceCallback(), function() use ($target) { return $target; });
         }
 
         if ( ! is_string($target)) {
