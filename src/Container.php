@@ -1,6 +1,6 @@
 <?php namespace Monolith\DependencyInjection;
 
-use Monolith\Collections\MutableDict;
+use Monolith\Collections\MutableDictionary;
 use Psr\Container\ContainerInterface;
 
 final class Container implements ContainerInterface
@@ -9,7 +9,7 @@ final class Container implements ContainerInterface
 
     public function __construct()
     {
-        $this->resolvers = new MutableDict;
+        $this->resolvers = new MutableDictionary;
         $this->bind(Container::class, function ($r) {
             return $this;
         });
