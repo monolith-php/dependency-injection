@@ -59,6 +59,16 @@ class ContainerSpec extends ObjectBehavior
         $dependency1->shouldBe($dependency2);
     }
 
+    function it_can_resolve_a_singleton_instance_using_invoke()
+    {
+        $this->singleton(NoDependencies::class);
+
+        $dependency1 = $this(NoDependencies::class);
+        $dependency2 = $this(NoDependencies::class);
+
+        $dependency1->shouldBe($dependency2);
+    }
+
     function it_can_resolve_a_bound_singleton_instance()
     {
         $instance = new NoDependencies;

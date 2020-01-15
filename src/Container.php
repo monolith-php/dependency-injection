@@ -65,6 +65,11 @@ final class Container implements ContainerInterface
         return (new ReflectionBasedDependencyResolution($this, $name))->resolve();
     }
 
+    public function __invoke($name)
+    {
+        return $this->get($name);
+    }
+
     public function resolutionCallback(): callable
     {
         $container = $this;
