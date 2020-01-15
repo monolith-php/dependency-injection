@@ -70,14 +70,6 @@ final class Container implements ContainerInterface
         return $this->get($name);
     }
 
-    public function resolutionCallback(): callable
-    {
-        $container = $this;
-        return function (string $resolutionTarget) use ($container) {
-            return $container->get($resolutionTarget);
-        };
-    }
-
     public function instanceCallback(): callable
     {
         return function ($instance) {
@@ -103,17 +95,17 @@ final class Container implements ContainerInterface
     private function resolverFor($target)
     {
         if (is_callable($target)) {
-            return new Callback($this->resolutionCallback(), $target);
+            return new Callback($this, $target);
         }
 
         if (is_object($target)) {
-            return new Callback($this->instanceCallback(), function() use ($target) { return $target; });
+            return new InstanceCallback($this->instanceCallback(), function() use ($target) { return $target; });
         }
 
         if ( ! is_string($target)) {
             throw new ContainerResolutionTargetNotSupported($target);
         }
 
-        return new TargetReference($this->resolutionCallback(), $target);
+        return new TargetReference($this, $target);
     }
 }

@@ -3,18 +3,18 @@
 final class Callback implements TargetResolutionAlgorithm
 {
     /** @var callable */
-    private $resolutionCallback;
-    /** @var callable */
     private $callback;
+    /** @var Container */
+    private $container;
 
-    public function __construct(callable $resolutionCallback, callable $callback)
+    public function __construct(Container $container, callable $callback)
     {
         $this->callback = $callback;
-        $this->resolutionCallback = $resolutionCallback;
+        $this->container = $container;
     }
 
     public function resolve()
     {
-        return call_user_func($this->callback, $this->resolutionCallback);
+        return call_user_func($this->callback, $this->container);
     }
 }

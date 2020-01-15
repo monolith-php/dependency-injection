@@ -7,20 +7,15 @@ use spec\Monolith\DependencyInjection\DependencyStubs\NoDependencies;
 
 class TargetReferenceSpec extends ObjectBehavior
 {
-    /** @var callable */
-    private $resolutionCallback;
-
     function let()
     {
         $container = new Container;
-
-        $this->resolutionCallback = $container->resolutionCallback();
 
         $container->bind(NoDependencies::class, function ($c) {
             return new NoDependencies;
         });
 
-        $this->beConstructedWith($this->resolutionCallback, NoDependencies::class);
+        $this->beConstructedWith($container, NoDependencies::class);
     }
 
     function it_is_initializable()

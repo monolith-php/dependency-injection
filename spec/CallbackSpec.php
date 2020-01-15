@@ -15,12 +15,11 @@ class CallbackSpec extends ObjectBehavior
         $this->container = new Container;
 
         $this->beConstructedWith(
-            function (string $resolutionTarget) {
-                return $this->container->get($resolutionTarget);
-            },
-            function ($r) {
+            $this->container,
+            function ($container) {
                 return new NoDependencies;
-            });
+            }
+        );
     }
 
     function it_is_initializable()

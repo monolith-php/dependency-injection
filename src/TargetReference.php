@@ -2,19 +2,19 @@
 
 final class TargetReference implements TargetResolutionAlgorithm
 {
-    /** @var callable */
-    private $resolutionCallback;
     /** @var string */
     private $target;
+    /** @var Container */
+    private $container;
 
-    public function __construct(callable $resolutionCallback, string $target)
+    public function __construct(Container $container, string $target)
     {
-        $this->resolutionCallback = $resolutionCallback;
         $this->target = $target;
+        $this->container = $container;
     }
 
     public function resolve()
     {
-        return ($this->resolutionCallback)($this->target);
+        return $this->container->get($this->target);
     }
 }

@@ -9,15 +9,12 @@ use spec\Monolith\DependencyInjection\DependencyStubs\SingleDependency;
 
 class ReflectionBasedDependencyResolutionSpec extends ObjectBehavior
 {
-    /** @var collable */
-    private $resolutionCallback;
+    /** @var Container */
     private $container;
 
     function let()
     {
         $this->container = new Container;
-
-        $this->resolutionCallback = $this->container->resolutionCallback();
     }
 
     function it_can_resolve_with_no_dependencies() {

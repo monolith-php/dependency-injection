@@ -29,7 +29,7 @@ final class ReflectionBasedDependencyResolution implements TargetResolutionAlgor
 
         $parameterInstances = $parameters->map(function (\ReflectionParameter $param) {
             if ($param->getClass()) {
-                return $this->container->resolutionCallback()($param->getClass()->name);
+                return $this->container->get($param->getClass()->name);
             }
 
             if ($param->isDefaultValueAvailable()) {

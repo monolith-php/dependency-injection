@@ -17,7 +17,7 @@ class SingletonSpec extends ObjectBehavior
         $this->resolutionCount = new NumberObject(0);
 
         $this->beConstructedWith(
-            new Callback($this->container->resolutionCallback(), $this->callback())
+            new Callback($this->container, $this->callback())
         );
     }
 
