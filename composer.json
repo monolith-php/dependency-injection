@@ -6,14 +6,8 @@
     "dependency injection",
     "container"
   ],
-  "authors": [
-    {
-      "name": "Shawn McCool",
-      "email": "shawn@heybigname.com"
-    }
-  ],
   "require": {
-    "php": "^7.4",
+    "php": ">=7.4",
     "monolith/collections": "^8",
     "psr/container": "^1"
   },
