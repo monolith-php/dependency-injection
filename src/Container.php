@@ -61,7 +61,7 @@ final class Container implements ContainerInterface
      * @param string $name
      * @return bool
      */
-    public function has(string $name): bool
+    public function has(string $name)
     {
         return $this->resolvers->has($name);
     }
@@ -70,10 +70,10 @@ final class Container implements ContainerInterface
      * get() resolves the object for key $name
      *
      * @param string $name
-     * @return mixed|object
+     * @return object
      * @throws CanNotResolveAnUnboundInterface
      */
-    public function get(string $name): mixed
+    public function get(string $name)
     {
         $resolver = $this->resolvers->get($name);
 
