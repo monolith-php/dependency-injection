@@ -2,17 +2,14 @@
 
 final class Singleton implements TargetResolutionAlgorithm
 {
-    private $instance;
+    private object $instance;
 
-    /** @var TargetResolutionAlgorithm */
-    private $target;
-
-    public function __construct(TargetResolutionAlgorithm $target)
-    {
-        $this->target = $target;
+    public function __construct(
+        private TargetResolutionAlgorithm $target
+    ) {
     }
 
-    public function resolve()
+    public function resolve(): object
     {
         if ( ! isset($this->instance)) {
             $this->instance = $this->target->resolve();

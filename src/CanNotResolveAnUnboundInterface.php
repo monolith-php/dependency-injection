@@ -1,3 +1,7 @@
 <?php namespace Monolith\DependencyInjection;
 
-final class CanNotResolveAnUnboundInterface extends DependencyInjectionException {}
+use Psr\Container\NotFoundExceptionInterface;
+
+final class CanNotResolveAnUnboundInterface extends DependencyInjectionException implements NotFoundExceptionInterface
+{
+}

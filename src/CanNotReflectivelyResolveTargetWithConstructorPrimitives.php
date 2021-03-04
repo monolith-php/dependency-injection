@@ -1,3 +1,5 @@
 <?php namespace Monolith\DependencyInjection;
 
-final class CanNotReflectivelyResolveTargetWithConstructorPrimitives extends DependencyInjectionException {}
+use Psr\Container\NotFoundExceptionInterface;
+
+final class CanNotReflectivelyResolveTargetWithConstructorPrimitives extends DependencyInjectionException implements NotFoundExceptionInterface {}

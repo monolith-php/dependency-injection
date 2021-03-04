@@ -1,3 +1,5 @@
 <?php namespace Monolith\DependencyInjection;
 
-final class MayNotBindTargetToSelf extends DependencyInjectionException {}
+use Psr\Container\ContainerExceptionInterface;
+
+final class MayNotBindTargetToSelf extends DependencyInjectionException implements ContainerExceptionInterface {}

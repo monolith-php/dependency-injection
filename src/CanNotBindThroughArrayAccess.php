@@ -1,3 +1,5 @@
 <?php namespace Monolith\DependencyInjection;
 
-final class CanNotBindThroughArrayAccess extends DependencyInjectionException {}
+use Psr\Container\ContainerExceptionInterface;
+
+final class CanNotBindThroughArrayAccess extends DependencyInjectionException implements ContainerExceptionInterface {}

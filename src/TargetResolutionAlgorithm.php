@@ -1,5 +1,6 @@
 <?php namespace Monolith\DependencyInjection;
 
-interface TargetResolutionAlgorithm {
+interface TargetResolutionAlgorithm
+{
     public function resolve();
 }

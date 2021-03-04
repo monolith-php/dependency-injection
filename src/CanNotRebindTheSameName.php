@@ -1,3 +1,5 @@
 <?php namespace Monolith\DependencyInjection;
 
-final class CanNotRebindTheSameName extends DependencyInjectionException {}
+use Psr\Container\ContainerExceptionInterface;
+
+final class CanNotRebindTheSameName extends DependencyInjectionException implements ContainerExceptionInterface {}

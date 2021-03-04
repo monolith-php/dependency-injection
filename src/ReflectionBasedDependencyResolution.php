@@ -4,13 +4,10 @@ use Monolith\Collections\Collection;
 
 final class ReflectionBasedDependencyResolution implements TargetResolutionAlgorithm
 {
-    /** @var string */
-    private $target;
-
-    public function __construct(Container $container, string $target)
-    {
-        $this->container = $container;
-        $this->target = $target;
+    public function __construct(
+        private Container $container,
+        private string $target
+    ) {
     }
 
     public function resolve()
@@ -29,10 +26,9 @@ final class ReflectionBasedDependencyResolution implements TargetResolutionAlgor
 
         $parameterInstances = $parameters->map(
             function (\ReflectionParameter $param) {
-                $className = $param->getType() && ! $param->getType()->isBuiltin()
-                    ? $param->getType()->getName()
-                    : null;
-            
+
+                $className = ResolveClassTypeOfParameter::getClassType($param);
+
                 if ($className) {
                     return $this->container->get($className);
                 }

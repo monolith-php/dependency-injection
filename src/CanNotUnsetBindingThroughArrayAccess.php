@@ -1,3 +1,5 @@
 <?php namespace Monolith\DependencyInjection;
 
-final class CanNotUnsetBindingThroughArrayAccess extends DependencyInjectionException {}
+use Psr\Container\ContainerExceptionInterface;
+
+final class CanNotUnsetBindingThroughArrayAccess extends DependencyInjectionException implements ContainerExceptionInterface {}

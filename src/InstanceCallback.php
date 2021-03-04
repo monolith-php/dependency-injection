@@ -1,16 +1,13 @@
 <?php namespace Monolith\DependencyInjection;
 
+use Closure;
+
 final class InstanceCallback implements TargetResolutionAlgorithm
 {
-    /** @var callable */
-    private $callback;
-    /** @var callable */
-    private $instanceCallback;
-
-    public function __construct(callable $instanceCallback, callable $callback)
-    {
-        $this->callback = $callback;
-        $this->instanceCallback = $instanceCallback;
+    public function __construct(
+        private Closure $instanceCallback,
+        private Closure $callback
+    ) {
     }
 
     public function resolve()

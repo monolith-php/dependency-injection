@@ -1,6 +1,6 @@
 <?php
 
-function d(...$vars) {
+function dd(...$vars) {
     foreach ($vars as $var) {
         var_dump($var);
     }
@@ -8,7 +8,7 @@ function d(...$vars) {
 }
 
 function dw(...$vars) {
-    d(...array_map(function($var) {
+    dd(...array_map(function($var) {
         return $var->getWrappedObject();
     }, $vars));
 }

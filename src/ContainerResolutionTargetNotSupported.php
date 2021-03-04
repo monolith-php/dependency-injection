@@ -1,3 +1,5 @@
 <?php namespace Monolith\DependencyInjection;
 
-final class ContainerResolutionTargetNotSupported extends DependencyInjectionException {}
+use Psr\Container\ContainerExceptionInterface;
+
+final class ContainerResolutionTargetNotSupported extends DependencyInjectionException implements ContainerExceptionInterface {}
