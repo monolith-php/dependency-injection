@@ -9,7 +9,7 @@ final class Container implements ContainerInterface
 
     public function __construct()
     {
-        $this->resolvers = new MutableDictionary;
+        $this->resolvers = MutableDictionary::empty();
 
         $this->bind(
             Container::class,

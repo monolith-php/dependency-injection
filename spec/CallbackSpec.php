@@ -7,8 +7,7 @@ use spec\Monolith\DependencyInjection\DependencyStubs\NoDependencies;
 
 class CallbackSpec extends ObjectBehavior
 {
-    /** @var Container */
-    private $container;
+    private Container $container;
 
     function let()
     {
